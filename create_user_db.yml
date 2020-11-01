@@ -1,0 +1,16 @@
+---
+- name: Create database joe
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{ user_name }}"
+
+- name: Create user joe and grant access to database joe
+  become: true
+  become_user: postgres
+  postgresql_user:
+    db: "{{ db_name }}"
+    name: "{{ user_name }}"
+    password: "{{ user_pass }}"
+    priv: 'ALL'
+

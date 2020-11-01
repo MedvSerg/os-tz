@@ -1,0 +1,31 @@
+---
+- name: Install nginx
+  apt: pkg=nginx state=latest update_cache=true
+  become: yes
+- name: Start nginx
+  service:
+    name: nginx
+    state: started
+  become: yes
+- name: Copy nginx config file and restart nginx
+  copy:
+    src: Files/static_site.cfg
+    dest: /etc/nginx/sites-available/static_site.cfg
+  become: yes
+- name: Create symlink
+  file:
+    src: /etc/nginx/sites-available/static_site.cfg
+    dest: /etc/nginx/sites-enabled/default
+    state: link
+  become: yes
+- name: Copy the content of the web site
+  copy:
+    src: Site/
+    dest: /var/www/html
+  become: yes
+- name: Restart nginx
+  service:
+    name: nginx
+    state: restarted
+  become: yes
+

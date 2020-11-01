@@ -1,0 +1,18 @@
+---
+- hosts: web
+  
+  vars:
+    user_name: "joe"
+    db_name:   "joe"
+    user_pass: "qq1"
+ 
+  tasks:
+  
+    - include: set_sudoer.yml
+ 
+    - include: nginx_install.yml
+
+    - include: postgresql_install.yml
+
+    - include: create_user_db.yml
+
